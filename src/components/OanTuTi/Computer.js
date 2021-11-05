@@ -9,6 +9,12 @@ import {
 import KeoBuaBaoItem from "./KeoBuaBaoItem";
 
 class Computer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          computer: {},
+        };
+      }
   renderSelectedIMG = (side) => {
     let { mangTuTi, computer } = this.props;
     let index = mangTuTi.findIndex((item) => item.ma === computer.ma);
@@ -30,7 +36,15 @@ class Computer extends Component {
       );
     });
   };
-
+  static getDerivedStateFromProps(newProps, currentState) {
+    return {...newProps.computer};
+  }
+  shouldComponentUpdate(newProps,newState){
+    if(newProps.computer.ma !== this.state.computer.ma){
+      return true;
+    }
+    return false;
+  }
   render() {
     return (
       <>
