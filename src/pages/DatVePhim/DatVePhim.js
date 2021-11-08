@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import React from "react";
+import FilmLeftSide from "../../components/DatVePhim/FilmLeftSide";
+import FilmRightSide from "../../components/DatVePhim/FilmRightSide";
 
-export default class DatVePhim extends Component {
-    render() {
-        return (
-            <div>
-                DatVePhim
-            </div>
-        )
-    }
+export default function DatVePhim() {
+  return (
+    <div className="container mt-4" style={{ position: "relative" }}>
+      <FilmLeftSide />
+      <FilmRightSide />
+    </div>
+  );
 }
