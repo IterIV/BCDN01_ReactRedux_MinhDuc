@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import FilmTotalSeatCost from "./FilmTotalSeatCost";
-
+import ModalVideo from 'react-modal-video'
+import 'react-modal-video/css/modal-video.css'
 const pdLeftAndRight = 30;
 
 const FilmInfoStyled = styled.div`
@@ -96,6 +97,7 @@ const FilmDescStyled = styled.p`
   height: auto;
 `;
 export default function FilmRightSide() {
+  const [isOpen, setOpen] = useState(false)
   return (
     <div>
       <FilmInfoStyled>
@@ -113,7 +115,8 @@ export default function FilmRightSide() {
               <p>Phiêu lưu - Hành động</p>
             </div>
             <div className="col-4 text-right">
-              <ButtonPlayStyled>
+            <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId="Ke1Y3P9D0Bc" onClose={() => setOpen(false)} />
+              <ButtonPlayStyled onClick={()=> setOpen(true)}>
                 <i className="fas fa-play"></i>
               </ButtonPlayStyled>
             </div>
