@@ -65,7 +65,7 @@ export default function FilmTotalSeatCost() {
           </div>
         </div>
       </div>
-      <ButtonCheckoutStyled disabled={mangGheChon.length > 0 ? true : false}>
+      <ButtonCheckoutStyled disabled={mangGheChon.length > 0 ? false : true}>
         Thanh toán
       </ButtonCheckoutStyled>
     </div>
