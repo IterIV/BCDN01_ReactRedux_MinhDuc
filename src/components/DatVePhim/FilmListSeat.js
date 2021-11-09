@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { CHON_GHE } from "../../redux/Actions/DatVePhimTypes";
 
 const Wrapper = styled.div`
   background-color: #fafbfa;
@@ -62,7 +64,7 @@ const SeatStyled = styled.div`
   transition: 0.5s;
   margin: 0px 5px;
   &::before {
-    content: "C1";
+    content: "${(props) => props.name}";
     font-size: 12px;
     color: #e0e2e1;
     position: absolute;
@@ -94,7 +96,7 @@ const SeatStyled = styled.div`
       color: white;
     }
   }
-  &.active {
+  &.daChon {
     background-color: #f14231;
     &::after {
       background-color: #f14231;
@@ -103,7 +105,7 @@ const SeatStyled = styled.div`
       color: white;
     }
   }
-  &.buyout {
+  &.daDat {
     background-color: #76c3ea;
     &::after {
       background-color: #76c3ea;
@@ -112,71 +114,52 @@ const SeatStyled = styled.div`
       color: white;
     }
   }
-  &.reserved {
-    background-color: #5a5e61;
-    &::after {
-      background-color: #5a5e61;
-    }
-    &::before {
-      color: white;
-    }
-  }
 `;
 
 export default function FilmListSeat() {
-  const styleNameRowSeat = {
-    fontWeight: "bold",
-    opacity: "0.3",
+  let { mangGhe, mangGheChon } = useSelector(
+    (rootReducer) => rootReducer.DatVePhimReducer
+  );
+  let dispatch = useDispatch();
+  const renderListSeat = () => { 
+    return mangGhe.map((item, index) => {
+      return (
+        <SeatWrapper key={index}>
+          <p style={{ fontWeight: "bold", opacity: "0.3" }}>{item.hang}</p>
+          <div className="d-flex">
+            {item.danhSachGhe.map((ghe, index1) => {
+              return (
+                <SeatStyled
+                  key={index1}
+                  name={ghe.soGhe}
+                  className={`${ghe.daDat ? "daDat" : ""} ${
+                    mangGheChon.findIndex(
+                      (item) => item.soGhe === ghe.soGhe
+                    ) !== -1
+                      ? "daChon"
+                      : ""
+                  }`}
+                  onClick={() => {
+                    dispatch({
+                      type: CHON_GHE,
+                      gheChon: ghe,
+                    });
+                  }}
+                />
+              );
+            })}
+          </div>
+          <p style={{ fontWeight: "bold", opacity: "0.3" }}>{item.hang}</p>
+        </SeatWrapper>
+      );
+    });
   };
   return (
     <Wrapper>
       <ScreenStyled>
         <ScreenShadowStyled />
       </ScreenStyled>
-      <SeatWrapper>
-        <p style={styleNameRowSeat}>A</p>
-        <div className="d-flex">
-          <div style={{ marginRight: "20px" }}>
-            <SeatStyled className="buyout" />
-            <SeatStyled />
-            <SeatStyled />
-            <SeatStyled />
-            <SeatStyled />
-            <SeatStyled />
-          </div>
-          <div style={{ marginLeft: "20px" }}>
-            <SeatStyled />
-            <SeatStyled />
-            <SeatStyled />
-            <SeatStyled />
-            <SeatStyled />
-            <SeatStyled />
-          </div>
-        </div>
-        <p style={styleNameRowSeat}>A</p>
-      </SeatWrapper>
-      <SeatWrapper>
-        <p style={styleNameRowSeat}>B</p>
-        <div className="d-flex">
-          <div style={{ marginRight: "20px" }}>
-            <SeatStyled className="buyout" />
-            <SeatStyled />
-            <SeatStyled />
-            <SeatStyled />
-            <SeatStyled />
-            <SeatStyled />
-          </div>
-          <div style={{ marginLeft: "20px" }}>
-            <SeatStyled />
-            <SeatStyled />
-            <SeatStyled />
-            <SeatStyled />
-            <SeatStyled />
-            <SeatStyled />
-          </div>
-        </div>
-        <p style={styleNameRowSeat}>B</p>
-      </SeatWrapper>
+      {renderListSeat()}
     </Wrapper>
   );
 }

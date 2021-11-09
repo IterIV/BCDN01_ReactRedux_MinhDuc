@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import FilmTotalSeatCost from "./FilmTotalSeatCost";
 
 const pdLeftAndRight = 30;
 
@@ -132,7 +133,9 @@ export default function FilmRightSide() {
           bại "Người Sắt", đồng thời khiến siêu anh hùng - tỷ phú trở thành kẻ
           mất trí nhớ...
         </FilmDescStyled>
+        <FilmTotalSeatCost/>
       </FilmInfoStyled>
+     
     </div>
   );
 }

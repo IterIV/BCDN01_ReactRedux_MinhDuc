@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { CHON_NGAY_CHIEU } from "../../redux/Actions/DatVePhimTypes";
 
 const DateItemStyled = styled.div`
   background-color: #f7f8f7;
@@ -55,8 +56,7 @@ const DateItemStyled = styled.div`
 `;
 
 export default function DateItem(props) {
-  const [selected, setSelected] = useState(false);
-  let { date } = props;
+  let { date, dateSelected } = props;
   const arrDay = [
     "chủ nhật",
     "thứ hai",
@@ -66,13 +66,19 @@ export default function DateItem(props) {
     "thứ sáu",
     "thứ bảy",
   ];
+  const dispatch = useDispatch();
   return (
     <div className="text-center">
       <DateItemStyled
-        className={selected === true ? "active" : ""}
-        onClick={() => {
-          setSelected(!selected);
-        }}
+        className={(date.getDate()===dateSelected.getDate()) && (date.getMonth()===dateSelected.getMonth()) && (date.getFullYear()===dateSelected.getFullYear()) ? "active" : ""}
+        onClick = {
+          () => {
+            dispatch({
+              type: CHON_NGAY_CHIEU,
+              ngayChieu: date
+            })
+          }
+        }
       >
         <i className="fas fa-circle"></i>
         <p>{date.getDate()}</p>

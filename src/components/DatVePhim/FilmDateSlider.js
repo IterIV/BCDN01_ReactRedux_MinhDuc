@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
 import DateSliderArrow from "./DateSliderArrow";
 import DateItem from "./DateItem";
+import {useSelector } from "react-redux";
 
 const settings = {
   slidesToShow: 8,
@@ -20,7 +21,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const renderDate = (numDays) => {
+const renderDate = (numDays,dateSelected) => {
   let arrDate = [];
   let today = new Date();
   for (let index = 0; index <= numDays; index++) {
@@ -28,16 +29,15 @@ const renderDate = (numDays) => {
     newDay.setDate(today.getDate() + index);
     arrDate.push(newDay);
   }
-
   return arrDate.map((item, index) => {
-    return <DateItem key={index} date={item} />;
+    return <DateItem key={index} date={item} dateSelected={dateSelected}/>;
   });
-  //   let dayIndex = arrDay[today.getDay() - 1];
 };
 export default function FilmDateSlider() {
+  const {ngayChieu} = useSelector(rootReducer => rootReducer.DatVePhimReducer);
   return (
     <Wrapper>
-      <Slider {...settings}>{renderDate(10)}</Slider>
+      <Slider {...settings}>{renderDate(10,ngayChieu)}</Slider>
     </Wrapper>
   );
 }
