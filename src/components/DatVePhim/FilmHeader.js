@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const FilmHeaderStyled = styled.div`
@@ -13,8 +12,16 @@ const HeaderSubText = styled.p`
   opacity: 0.6;
 `;
 export default function FilmHeader() {
-  const {ngayChieu} = useSelector(rootReducer => rootReducer.DatVePhimReducer);
-
+  const arrDay = [
+    "chủ nhật",
+    "thứ hai",
+    "thứ ba",
+    "thứ tư",
+    "thứ năm",
+    "thứ sáu",
+    "thứ bảy",
+  ];
+  let toDay = new Date();
   return (
     <FilmHeaderStyled className="row">
       <div className="col-6 text-left">
@@ -25,7 +32,7 @@ export default function FilmHeader() {
       </div>
       <div className="col-6 text-right">
         <HeaderMainText>
-          <b>Thứ {ngayChieu.getDay()+1},</b> ngày {ngayChieu.getDate()}/{ngayChieu.getMonth()+1}/{ngayChieu.getFullYear()}
+          <b style={{textTransform: "capitalize"}}>{arrDay[toDay.getDay()]},</b> ngày {toDay.getDate()}/{toDay.getMonth()+1}/{toDay.getFullYear()}
         </HeaderMainText>
         <HeaderSubText>ngày hôm nay</HeaderSubText>
       </div>

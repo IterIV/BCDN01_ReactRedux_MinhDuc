@@ -15,7 +15,6 @@ const ButtonCheckoutStyled = styled.button`
   transition: 0.5s;
   ${(props) => {
     if (props.disabled) {
-      console.log(props.disabled);
       return ``;
     }
     return `&:hover {
